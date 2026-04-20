@@ -1,0 +1,9 @@
+# robots.txt
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Disallow: /admin-config.html
+
+Sitemap: https://auralis.com/sitemap.xml

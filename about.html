@@ -1,0 +1,86 @@
+<!-- about.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title>About</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+<body>
+  <header class="header sticky-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="" alt="Logo" class="logo-img" data-logo>
+      </a>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-container">
+    <h1 class="page-headline" data-about-headline></h1>
+    <div class="about-story">
+      <p class="lead" data-about-story></p>
+      <div class="mission-box">
+        <h2>Our Mission</h2>
+        <p data-about-mission></p>
+      </div>
+      <h3>Why <span data-product-shortname></span> Exists</h3>
+      <p data-about-why></p>
+      <p class="signature">— The <span data-brand-name></span> Team</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="" alt="Logo" class="footer-logo" data-footer-logo>
+          <p class="footer-tagline" data-brand-tagline></p>
+        </div>
+        <div class="footer-links-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="order.html">Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#" data-whatsapp-link>WhatsApp</a></li>
+            <li><a href="#" data-email-link>Email</a></li>
+          </ul>
+        </div>
+        <div class="footer-legal-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© <span data-copyright-year></span> <span data-brand-name></span>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/about.js"></script>
+</body>
+</html>

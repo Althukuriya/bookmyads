@@ -1,0 +1,161 @@
+<!-- order.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title>Secure Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+<body>
+  <header class="header sticky-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img src="" alt="Logo" class="logo-img" data-logo>
+      </a>
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="order-page">
+    <div class="container">
+      <div class="checkout-wrapper">
+        <section id="orderFormSection" class="checkout-card">
+          <div class="step-indicator">Step 1 of 3 — Shipping Details</div>
+          <h2 class="checkout-title">Delivery Address</h2>
+          
+          <form id="customerForm">
+            <div class="form-section-title">Address Information</div>
+            
+            <div class="input-group">
+              <label for="pincode">Pincode *</label>
+              <input type="text" id="pincode" placeholder="560001" required>
+            </div>
+            
+            <div class="input-row">
+              <div class="input-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" placeholder="Bengaluru" required>
+              </div>
+              <div class="input-group">
+                <label for="state">State *</label>
+                <input type="text" id="state" placeholder="Karnataka" required>
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label for="flatNo">Flat / House Number *</label>
+              <input type="text" id="flatNo" placeholder="Enter flat, house number" required>
+            </div>
+            
+            <div class="input-group">
+              <label for="area">Area / Colony / Street *</label>
+              <textarea id="area" rows="2" placeholder="Apartment, Area, Sector, Village" required></textarea>
+            </div>
+            
+            <div class="form-section-title">Contact Information</div>
+            
+            <div class="input-group">
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" placeholder="Full name" required>
+            </div>
+            
+            <div class="input-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" placeholder="email@example.com" required>
+            </div>
+            
+            <div class="input-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+            </div>
+            
+            <button type="button" class="btn btn-primary btn-block" id="continueToPaymentBtn">
+              Continue to Payment
+            </button>
+          </form>
+          <p class="secure-note">Your information is secure and used only for order processing.</p>
+        </section>
+
+        <section id="paymentSection" class="checkout-card hidden">
+          <div class="step-indicator">Step 2 of 3 — Complete Payment</div>
+          <h2 class="checkout-title">Scan & Pay with UPI</h2>
+          <div class="payment-details">
+            <p class="upi-id-label">UPI ID</p>
+            <div class="upi-id-box" id="upiIdDisplay"></div>
+            <div class="qr-container">
+              <img src="" alt="UPI QR Code" class="qr-code-img" id="qrImage">
+            </div>
+            <button type="button" class="btn btn-outline btn-block" id="downloadQrBtn">
+              Download QR Code
+            </button>
+          </div>
+        </section>
+
+        <section id="instructionSection" class="checkout-card hidden">
+          <div class="step-indicator">Step 3 of 3 — Confirmation</div>
+          <h2 class="checkout-title">Almost There</h2>
+          <p class="instruction-text">Open any UPI app and complete payment using the QR code or UPI ID above.</p>
+          <div class="action-buttons">
+            <button type="button" class="btn btn-success btn-block" id="paymentDoneBtn">Payment Completed</button>
+            <button type="button" class="btn btn-outline-dark btn-block" id="cancelOrderBtn">Cancel Order</button>
+          </div>
+          <p class="hint-message">After clicking "Payment Completed", WhatsApp will open for order confirmation.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="" alt="Logo" class="footer-logo" data-footer-logo>
+          <p class="footer-tagline" data-brand-tagline></p>
+        </div>
+        <div class="footer-links-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="order.html">Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#" data-whatsapp-link>WhatsApp</a></li>
+            <li><a href="#" data-email-link>Email</a></li>
+          </ul>
+        </div>
+        <div class="footer-legal-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">© <span data-copyright-year></span> <span data-brand-name></span>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/order.js"></script>
+</body>
+</html>

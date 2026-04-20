@@ -1,0 +1,39 @@
+<!-- sitemap.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://auralis.com/index.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/order.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/about.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/contact.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/privacy.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/terms.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://auralis.com/refund.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <priority>0.50</priority>
+  </url>
+</urlset>

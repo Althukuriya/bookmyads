@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Product Configuration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .header {
+      background: linear-gradient(145deg, #0b0c0e 0%, #1a1c20 100%);
+      padding: 40px;
+      border-radius: 32px;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .header h1 span {
+      background: #c9a04b;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+    .subtitle { color: #9ca3af; }
+    .config-section {
+      background: white;
+      padding: 30px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f3f4f6;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0b0c0e;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group.full-width { grid-column: span 2; }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 0.85rem;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #c9a04b;
+    }
+    .items-container { display: flex; flex-direction: column; gap: 16px; }
+    .item-card {
+      background: #f9fafb;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .btn-sm {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-danger { background: #fee2e2; color: #dc2626; }
+    .btn-danger:hover { background: #fecaca; }
+    .btn-secondary { background: #e5e7eb; color: #374151; }
+    .btn-secondary:hover { background: #d1d5db; }
+    .action-bar {
+      position: sticky;
+      bottom: 20px;
+      background: white;
+      padding: 16px 24px;
+      border-radius: 60px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+    .btn-primary { background: #0b0c0e; color: white; }
+    .btn-primary:hover { background: #2a2c30; }
+    .btn-outline { background: transparent; border: 1.5px solid #e5e7eb; }
+    .stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #c9a04b;
+    }
+    .stat-label { font-size: 0.75rem; color: #9ca3af; }
+    .success-message {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #059669;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      display: none;
+      z-index: 1000;
+    }
+    .add-btn {
+      background: #f3f4f6;
+      border: 1px dashed #c9a04b;
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .add-btn:hover { background: #e5e7eb; }
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full-width { grid-column: span 1; }
+      .action-bar { flex-direction: column; gap: 12px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Product Configurator <span>v4.0</span></h1>
+      <p class="subtitle">Edit all site content. Download config.js and replace the existing file.</p>
+      <div class="stats">
+        <div><span class="stat-value" id="benefitCount">0</span><div class="stat-label">Benefits</div></div>
+        <div><span class="stat-value" id="featureCount">0</span><div class="stat-label">Features</div></div>
+        <div><span class="stat-value" id="galleryCount">0</span><div class="stat-label">Gallery</div></div>
+        <div><span class="stat-value" id="badgeCount">0</span><div class="stat-label">Trust Badges</div></div>
+      </div>
+    </div>
+
+    <div id="configForm"></div>
+
+    <div class="action-bar">
+      <div>
+        <button class="btn btn-primary" onclick="downloadConfig()">Download config.js</button>
+        <button class="btn btn-outline" onclick="copyToClipboard()">Copy to Clipboard</button>
+      </div>
+      <div><span style="color:#6b7280; font-size:0.85rem;">Replace js/config.js with downloaded file</span></div>
+    </div>
+  </div>
+  <div class="success-message" id="successMessage">Configuration downloaded!</div>
+
+  <script>
+    const DEFAULT_CONFIG = {
+      brand: { name: "AURALIS", tagline: "Premium Audio Experience", logo: "assets/logo.png", description: "Crafting exceptional audio products." },
+      product: {
+        name: "Symphony Pro", shortName: "Symphony", price: 29999, priceFormatted: "₹29,999",
+        currency: "INR", tagline: "Immersive sound. Timeless design.",
+        description: "Premium wireless headphones with advanced adaptive noise cancellation.",
+        badge: "Limited Edition", sectionTitle: "Engineered for Perfection",
+        features: ["Bluetooth 5.3", "Premium Aluminum", "Touch Controls", "IPX4 Rating"],
+        benefits: [
+          { icon: "headphones", title: "Adaptive ANC", description: "Hybrid noise cancellation" },
+          { icon: "battery", title: "60h Battery", description: "Extended listening" }
+        ],
+        trustBadges: [
+          { icon: "shield", title: "Secure Transaction", description: "Every order verified" }
+        ]
+      },
+      images: { logo: "assets/logo.png", mainProduct: "assets/product-main.jpg", gallery: ["assets/product-1.jpg"], qrCode: "assets/qr-upi.png" },
+      about: { story: "", mission: "", whyExists: "" },
+      contact: { whatsapp: "+91 98765 43210", email: "support@auralis.com", locations: ["Mumbai", "Bangalore"] },
+      payment: { upiId: "auralis@okhdfcbank", whatsappNumber: "919876543210", qrCodePath: "assets/qr-upi.png" },
+      legal: { privacy: "", terms: "", refund: "" },
+      video: { enabled: false, videoUrl: "", posterImage: "", title: "", description: "" },
+      seo: { title: "AURALIS | Premium Audio", description: "Premium headphones", keywords: "headphones, audio" },
+      urls: { website: "https://auralis.com" }
+    };
+
+    let currentConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+
+    function updateStats() {
+      document.getElementById('benefitCount').textContent = currentConfig.product.benefits.length;
+      document.getElementById('featureCount').textContent = currentConfig.product.features.length;
+      document.getElementById('galleryCount').textContent = currentConfig.images.gallery.length;
+      document.getElementById('badgeCount').textContent = currentConfig.product.trustBadges.length;
+    }
+
+    function generateForm() {
+      let html = `
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Brand</div></div>
+          <div class="form-grid">
+            <div class="form-group"><label>Brand Name</label><input id="brandName" value="${escapeHtml(currentConfig.brand.name)}"></div>
+            <div class="form-group"><label>Tagline</label><input id="brandTagline" value="${escapeHtml(currentConfig.brand.tagline)}"></div>
+            <div class="form-group full-width"><label>Logo Path</label><input id="brandLogo" value="${escapeHtml(currentConfig.brand.logo)}"></div>
+          </div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Product</div></div>
+          <div class="form-grid">
+            <div class="form-group"><label>Product Name</label><input id="prodName" value="${escapeHtml(currentConfig.product.name)}"></div>
+            <div class="form-group"><label>Short Name</label><input id="prodShortName" value="${escapeHtml(currentConfig.product.shortName)}"></div>
+            <div class="form-group"><label>Price (₹)</label><input type="number" id="prodPrice" value="${currentConfig.product.price}"></div>
+            <div class="form-group"><label>Badge</label><input id="prodBadge" value="${escapeHtml(currentConfig.product.badge)}"></div>
+            <div class="form-group full-width"><label>Tagline</label><textarea id="prodTagline">${escapeHtml(currentConfig.product.tagline)}</textarea></div>
+            <div class="form-group full-width"><label>Description</label><textarea id="prodDesc">${escapeHtml(currentConfig.product.description)}</textarea></div>
+          </div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Features</div><button class="add-btn" onclick="addFeature()">+ Add Feature</button></div>
+          <div id="featuresList"></div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Benefits</div><button class="add-btn" onclick="addBenefit()">+ Add Benefit</button></div>
+          <div id="benefitsList"></div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Trust Badges</div><button class="add-btn" onclick="addTrustBadge()">+ Add Badge</button></div>
+          <div id="trustBadgesList"></div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Gallery Images</div><button class="add-btn" onclick="addGalleryImage()">+ Add Image</button></div>
+          <div id="galleryList"></div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">About Page</div></div>
+          <div class="form-group full-width"><label>Story</label><textarea id="aboutStory" rows="3">${escapeHtml(currentConfig.about.story)}</textarea></div>
+          <div class="form-group full-width"><label>Mission</label><textarea id="aboutMission" rows="3">${escapeHtml(currentConfig.about.mission)}</textarea></div>
+          <div class="form-group full-width"><label>Why Exists</label><textarea id="aboutWhy" rows="3">${escapeHtml(currentConfig.about.whyExists)}</textarea></div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Contact & Payment</div></div>
+          <div class="form-grid">
+            <div class="form-group"><label>WhatsApp Number</label><input id="contactWa" value="${escapeHtml(currentConfig.contact.whatsapp)}"></div>
+            <div class="form-group"><label>Email</label><input id="contactEmail" value="${escapeHtml(currentConfig.contact.email)}"></div>
+            <div class="form-group"><label>UPI ID</label><input id="upiId" value="${escapeHtml(currentConfig.payment.upiId)}"></div>
+            <div class="form-group"><label>WhatsApp Business Number</label><input id="waNumber" value="${escapeHtml(currentConfig.payment.whatsappNumber)}"></div>
+            <div class="form-group full-width"><label>QR Code Path</label><input id="qrPath" value="${escapeHtml(currentConfig.payment.qrCodePath)}"></div>
+          </div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">Video</div>
+            <label class="toggle"><input type="checkbox" id="videoEnabled" ${currentConfig.video.enabled ? 'checked' : ''}> Enable</label>
+          </div>
+          <div id="videoFields" style="display:${currentConfig.video.enabled ? 'block' : 'none'}">
+            <div class="form-grid">
+              <div class="form-group full-width"><label>Title</label><input id="videoTitle" value="${escapeHtml(currentConfig.video.title)}"></div>
+              <div class="form-group full-width"><label>Description</label><input id="videoDesc" value="${escapeHtml(currentConfig.video.description)}"></div>
+              <div class="form-group full-width"><label>Video URL</label><input id="videoUrl" value="${escapeHtml(currentConfig.video.videoUrl)}"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="config-section">
+          <div class="section-header"><div class="section-title">SEO</div></div>
+          <div class="form-grid">
+            <div class="form-group full-width"><label>Title</label><input id="seoTitle" value="${escapeHtml(currentConfig.seo.title)}"></div>
+            <div class="form-group full-width"><label>Description</label><textarea id="seoDesc">${escapeHtml(currentConfig.seo.description)}</textarea></div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('configForm').innerHTML = html;
+      
+      renderFeatures();
+      renderBenefits();
+      renderTrustBadges();
+      renderGallery();
+      
+      document.getElementById('videoEnabled').addEventListener('change', function() {
+        document.getElementById('videoFields').style.display = this.checked ? 'block' : 'none';
+      });
+      
+      updateStats();
+    }
+    
+    function renderFeatures() {
+      const container = document.getElementById('featuresList');
+      if (!container) return;
+      container.innerHTML = currentConfig.product.features.map((feature, i) => `
+        <div class="item-card">
+          <div class="item-header">
+            <strong>Feature ${i+1}</strong>
+            <button class="btn-sm btn-danger" onclick="removeFeature(${i})">Remove</button>
+          </div>
+          <input type="text" value="${escapeHtml(feature)}" onchange="updateFeature(${i}, this.value)" style="width:100%">
+        </div>
+      `).join('');
+    }
+    
+    function renderBenefits() {
+      const container = document.getElementById('benefitsList');
+      if (!container) return;
+      container.innerHTML = currentConfig.product.benefits.map((benefit, i) => `
+        <div class="item-card">
+          <div class="item-header">
+            <strong>Benefit ${i+1}</strong>
+            <button class="btn-sm btn-danger" onclick="removeBenefit(${i})">Remove</button>
+          </div>
+          <div class="form-grid" style="margin-top:8px">
+            <input type="text" placeholder="Icon name" value="${escapeHtml(benefit.icon)}" onchange="updateBenefit(${i}, 'icon', this.value)">
+            <input type="text" placeholder="Title" value="${escapeHtml(benefit.title)}" onchange="updateBenefit(${i}, 'title', this.value)">
+          </div>
+          <input type="text" placeholder="Description" value="${escapeHtml(benefit.description)}" onchange="updateBenefit(${i}, 'description', this.value)" style="width:100%; margin-top:8px">
+        </div>
+      `).join('');
+    }
+    
+    function renderTrustBadges() {
+      const container = document.getElementById('trustBadgesList');
+      if (!container) return;
+      container.innerHTML = currentConfig.product.trustBadges.map((badge, i) => `
+        <div class="item-card">
+          <div class="item-header">
+            <strong>Badge ${i+1}</strong>
+            <button class="btn-sm btn-danger" onclick="removeTrustBadge(${i})">Remove</button>
+          </div>
+          <div class="form-grid" style="margin-top:8px">
+            <input type="text" placeholder="Icon name" value="${escapeHtml(badge.icon)}" onchange="updateTrustBadge(${i}, 'icon', this.value)">
+            <input type="text" placeholder="Title" value="${escapeHtml(badge.title)}" onchange="updateTrustBadge(${i}, 'title', this.value)">
+          </div>
+          <input type="text" placeholder="Description" value="${escapeHtml(badge.description)}" onchange="updateTrustBadge(${i}, 'description', this.value)" style="width:100%; margin-top:8px">
+        </div>
+      `).join('');
+    }
+    
+    function renderGallery() {
+      const container = document.getElementById('galleryList');
+      if (!container) return;
+      container.innerHTML = currentConfig.images.gallery.map((img, i) => `
+        <div class="item-card">
+          <div class="item-header">
+            <strong>Image ${i+1}</strong>
+            <button class="btn-sm btn-danger" onclick="removeGalleryImage(${i})">Remove</button>
+          </div>
+          <input type="text" value="${escapeHtml(img)}" onchange="updateGalleryImage(${i}, this.value)" style="width:100%">
+        </div>
+      `).join('');
+    }
+    
+    function addFeature() { currentConfig.product.features.push('New Feature'); renderFeatures(); updateStats(); }
+    function removeFeature(i) { currentConfig.product.features.splice(i,1); renderFeatures(); updateStats(); }
+    function updateFeature(i, val) { currentConfig.product.features[i] = val; }
+    
+    function addBenefit() { currentConfig.product.benefits.push({ icon: "headphones", title: "New Benefit", description: "Description" }); renderBenefits(); updateStats(); }
+    function removeBenefit(i) { currentConfig.product.benefits.splice(i,1); renderBenefits(); updateStats(); }
+    function updateBenefit(i, field, val) { currentConfig.product.benefits[i][field] = val; }
+    
+    function addTrustBadge() { currentConfig.product.trustBadges.push({ icon: "shield", title: "New Badge", description: "Description" }); renderTrustBadges(); updateStats(); }
+    function removeTrustBadge(i) { currentConfig.product.trustBadges.splice(i,1); renderTrustBadges(); updateStats(); }
+    function updateTrustBadge(i, field, val) { currentConfig.product.trustBadges[i][field] = val; }
+    
+    function addGalleryImage() { currentConfig.images.gallery.push('assets/new-image.jpg'); renderGallery(); updateStats(); }
+    function removeGalleryImage(i) { currentConfig.images.gallery.splice(i,1); renderGallery(); updateStats(); }
+    function updateGalleryImage(i, val) { currentConfig.images.gallery[i] = val; }
+    
+    function collectConfig() {
+      const price = parseInt(document.getElementById('prodPrice')?.value) || 29999;
+      return {
+        brand: {
+          name: document.getElementById('brandName')?.value || '',
+          tagline: document.getElementById('brandTagline')?.value || '',
+          logo: document.getElementById('brandLogo')?.value || '',
+          description: currentConfig.brand.description
+        },
+        product: {
+          name: document.getElementById('prodName')?.value || '',
+          shortName: document.getElementById('prodShortName')?.value || '',
+          price: price,
+          priceFormatted: `₹${price.toLocaleString('en-IN')}`,
+          currency: "INR",
+          tagline: document.getElementById('prodTagline')?.value || '',
+          description: document.getElementById('prodDesc')?.value || '',
+          badge: document.getElementById('prodBadge')?.value || '',
+          sectionTitle: currentConfig.product.sectionTitle,
+          features: currentConfig.product.features,
+          benefits: currentConfig.product.benefits,
+          trustBadges: currentConfig.product.trustBadges
+        },
+        images: {
+          logo: document.getElementById('brandLogo')?.value || '',
+          mainProduct: currentConfig.images.mainProduct,
+          gallery: currentConfig.images.gallery,
+          qrCode: document.getElementById('qrPath')?.value || ''
+        },
+        about: {
+          story: document.getElementById('aboutStory')?.value || '',
+          mission: document.getElementById('aboutMission')?.value || '',
+          whyExists: document.getElementById('aboutWhy')?.value || ''
+        },
+        contact: {
+          whatsapp: document.getElementById('contactWa')?.value || '',
+          email: document.getElementById('contactEmail')?.value || '',
+          locations: currentConfig.contact.locations
+        },
+        payment: {
+          upiId: document.getElementById('upiId')?.value || '',
+          whatsappNumber: document.getElementById('waNumber')?.value || '',
+          qrCodePath: document.getElementById('qrPath')?.value || ''
+        },
+        legal: currentConfig.legal,
+        video: {
+          enabled: document.getElementById('videoEnabled')?.checked || false,
+          videoUrl: document.getElementById('videoUrl')?.value || '',
+          posterImage: currentConfig.video.posterImage,
+          title: document.getElementById('videoTitle')?.value || '',
+          description: document.getElementById('videoDesc')?.value || ''
+        },
+        seo: {
+          title: document.getElementById('seoTitle')?.value || '',
+          description: document.getElementById('seoDesc')?.value || '',
+          keywords: currentConfig.seo.keywords
+        },
+        urls: currentConfig.urls
+      };
+    }
+    
+    function downloadConfig() {
+      const config = collectConfig();
+      const configString = `const PRODUCT_CONFIG = ${JSON.stringify(config, null, 2)};\n\nif (typeof window !== 'undefined' && document.readyState === 'loading') {\n  document.addEventListener('DOMContentLoaded', () => { if (typeof window.initSite === 'function') window.initSite(PRODUCT_CONFIG); });\n} else if (typeof window !== 'undefined' && typeof window.initSite === 'function') {\n  window.initSite(PRODUCT_CONFIG);\n}`;
+      
+      const blob = new Blob([configString], { type: 'application/javascript' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'config.js';
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      const msg = document.getElementById('successMessage');
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 3000);
+    }
+    
+    function copyToClipboard() {
+      const config = collectConfig();
+      const configString = `const PRODUCT_CONFIG = ${JSON.stringify(config, null, 2)};`;
+      navigator.clipboard.writeText(configString).then(() => alert('Configuration copied!'));
+    }
+    
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+    
+    generateForm();
+  </script>
+</body>
+</html>

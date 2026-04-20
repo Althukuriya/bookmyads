@@ -26,12 +26,12 @@ const PRODUCT_CONFIG = {
     ],
     "benefits": [
       {
-        "icon": "cpu",
+        "icon": "cleaning",
         "title": "Smart Cleaning",
         "description": "Intelligent navigation for efficient cleaning"
       },
       {
-        "icon": "battery-full",
+        "icon": "battery",
         "title": "Long Battery",
         "description": "Cleans longer "
       }
@@ -43,7 +43,7 @@ const PRODUCT_CONFIG = {
         "description": "Every order verified"
       },
       {
-        "icon": "check",
+        "icon": "shield-check",
         "title": "Trusted Dealer",
         "description": "Secure & Safe"
       },
@@ -53,7 +53,7 @@ const PRODUCT_CONFIG = {
         "description": "Quick and reliable shipping to your doorstep"
       },
       {
-        "icon": "star-fill",
+        "icon": "star",
         "title": "Premium Quality",
         "description": "Built with high-quality materials and design"
       },
